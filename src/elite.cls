@@ -55,14 +55,27 @@
 \RequirePackage{listings}       % source code listings
 \RequirePackage{sourcecodepro}  % soruce code font
 
-% Elite Packages
+% Dependencies changed by options
+% \RequirePackage[\elite@fontstyle]{sourceserifpro}
+
+
+%
+% Indices
+%
+\makeindex[name=definition, title=Definitionen]
+\providecommand{\printindices}{%
+    \printindex
+    \printindex[definition]
+}
+
+
+%
+% Elite Modules
+%
 \RequirePackage{elite-listings}
 \RequirePackage{elite-colors}
 \RequirePackage{elite-definitions}
 \RequirePackage{elite-utils}
-
-% Dependencies changed by options
-% \RequirePackage[\elite@fontstyle]{sourceserifpro}
 
 
 %
@@ -72,12 +85,13 @@
     % captions and listing index
     \addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
     \addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
-    \makeindex[title=Definitionenübersicht, columns=2, intoc]
 
     \RequirePackage[a4paper, margin=\elitePageMargin]{geometry}
     % fix spacing and indentation
     \frenchspacing
     \setlength{\parindent}{0em}
+
+    \makeindex[title=Definitionenübersicht, columns=2, intoc]
 }
 
 
@@ -102,18 +116,24 @@
 
 % change header sizes
 
+%! suppress = MightBreakTexify
+%! suppress = MissingLabel
 \renewcommand{\section}{%
     \@startsection
     {section}{1}{0pt}{-1.5ex plus -1ex minus -.2ex}%
     {1ex plus .2ex}{\LARGE\rmfamily\fontseries{sb}\selectfont\headlinecolor}%
 }
 
+%! suppress = MightBreakTexify
+%! suppress = MissingLabel
 \renewcommand{\subsection}{%
     \@startsection
     {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
     {1ex plus .2ex}{\Large\rmfamily\fontseries{sb}\selectfont\headlinecolor}%
 }
 
+%! suppress = MightBreakTexify
+%! suppress = MissingLabel
 \renewcommand{\subsubsection}{%
     \@startsection
     {subsubsection}{3}{0pt}{-1.5ex plus -1ex minus -.2ex}%

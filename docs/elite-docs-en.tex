@@ -9,6 +9,8 @@
 
 \usepackage[utf8]{inputenc} % Sonderzeichen ermöglichen
 \usepackage{blindtext}
+\usepackage{csquotes}
+\usepackage{amsfonts}
 
 % \usepackage[a4paper, margin=1in]{geometry}
 
@@ -32,6 +34,7 @@ might need to redefine some commands and macros.}
 \newpage
 
 \section{General}
+\label{sec:general}
 
 \begin{itemize}
     \item \code{\textbackslash{}tableofcontents}: print table of contents
@@ -55,6 +58,7 @@ might need to redefine some commands and macros.}
 \end{itemize}
 
 \section{Overview of all Font Sizes}
+\label{sec:overview-of-all-font-sizes}
 
 \begin{tabular}{rl}
     \code{tiny} & {\tiny tiny} \\
@@ -75,6 +79,7 @@ might need to redefine some commands and macros.}
 \paragraph*{Paragraph}
 
 \section{Elite Definitions}
+\label{sec:elite-definitions}
 
 \definition{Definition}{%
     A definition is created with the command \texttt{\textbackslash{}definition\{\textit{name}\}\{\textit{content}\}}.
@@ -96,11 +101,13 @@ might need to redefine some commands and macros.}
 \newpage
 
 \section{Include Graphics and Figures}
+\label{sec:include-graphics-and-figures}
 
 There are multiple ways to include images and figures inside of your doument.
 When drawing attention towards an image, you should use the \code{\textbackslash{}fig} command:
 
 \subsection{Regular Figures}
+\label{subsec:regular-figures}
 
 \fig[width=0.5\linewidth]{Prof. Dr. Thomas Worsch}{./worsch}
 
@@ -109,6 +116,7 @@ When drawing attention towards an image, you should use the \code{\textbackslash
 \end{CodeListing}
 
 \subsection{Wrapfigures}
+\label{subsec:wrapfigures}
 
 \wrapfig[11]{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
 
@@ -130,6 +138,7 @@ five arguments:
 
 
 \section{Algorithms and Code Segments}
+\label{sec:algorithms-and-code-segments}
 
 When writing algorithms or other code-listings, you might want to move the whole block to the
 next page if there are page breaks inbetween your lines of code.
@@ -165,6 +174,7 @@ If you want the listing to be indexed, use \code{caption}, otherwise use \code{t
 \section*{Code-Listing lanuage highlight examples}
 
 \subsection{language=pseudocode}
+\label{subsec:language=pseudocode}
 
 \begin{CodeListing}[language=pseudocode]
 Function test(a: $\mathbb{N}$) {
@@ -177,6 +187,7 @@ Function test(a: $\mathbb{N}$) {
 \end{CodeListing}
 
 \subsection{language=java}
+\label{subsec:language=java}
 
 \begincode
 \begin{CodeListing}[language=java, caption=Beispiel-Code]
@@ -189,8 +200,10 @@ public class Example {
 \endcode
 
 \subsection{language=80x86}
+\label{subsec:language=80x86}
 
 \begincode
+%! suppress = LineBreak
 \begin{CodeListing}[language=80x86, title=Intel 80x86 Assembler Beispiel]
 push    ebp       ; save calling function's stack frame (ebp)
 mov     ebp, esp  ; make a new stack frame on top of our caller's stack
@@ -199,10 +212,12 @@ sub     esp, 4    ; allocate 4 bytes of stack space
 \endcode
 
 \subsection{language=clang}
+\label{subsec:language=clang}
 
 \begincode
+%! suppress = EscapeHashOutsideCommand
 \begin{CodeListing}[language=clang, title=Example C-Code]
-#include <stdlio.h>
+#include <stdio.h>
 
 // This is a hello-world program in C
 int main(int argc, char** argv)
@@ -214,6 +229,7 @@ int main(int argc, char** argv)
 \endcode
 
 \subsection{language=riscv}
+\label{subsec:language=riscv}
 
 \begincode
 \begin{CodeListing}[language=riscv, title=Example RISC-V Assembler]
@@ -227,7 +243,11 @@ str0:   .asciz "Hello, World!\n"    ; define string
 \end{CodeListing}
 \endcode
 
-\printindex
+\printindices
+
+\defwarn{Please Note}{that the index might split a definition over two columns. This can be avoided by inserting
+a \code{\textbackslash{}filbreak} at the top of the index element definition. Since this has some side effects if
+the definitions are too short, we chose not to do that here.}
 
 \lstlistoflistings
 \listoffigures

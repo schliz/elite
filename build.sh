@@ -3,11 +3,20 @@
 ORIGINAL_WORKDIR=$(pwd)
 
 # change directory to location of script
-BASEDIR=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
-cd $BASEDIR
+BASE_DIR=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
+cd $BASE_DIR
 
 TEXMFHOME=$(kpsewhich -var-value TEXMFHOME)
 TEXMFMAIN=$(kpsewhich -var-value TEXMFMAIN)
+
+SOURCE_DIR=$BASE_DIR/src
+DOCS_SOURCE_DIR=$BASE_DIR/docs
+
+BUILD_DIR=$BASE_DIR/build
+BUILD_DOCS_DIR=$BUILD_DIR/docs
+
+CLASS_NAME=elite
+DOCS_SOURCE=$CLASS_NAME-docs-en.tex
 
 function clean_build_dir {
     # try to remove and redirect error messages to /dev/null
@@ -15,25 +24,26 @@ function clean_build_dir {
 }
 
 function assemble {
-    mkdir -p $BASEDIR/build/
-    echo -n "" > $BASEDIR/build/elite.cls
+    mkdir -p $BUILD_DIR/
+    echo -n "" > $BUILD_DIR/$CLASS_NAME.cls
 
     if [ $GITHUB_SHA ]
     then
-        echo "% Auto-built by GitHub Actions" >> $BASEDIR/build/elite.cls
-        echo "% Latest Commit-Hash: $GITHUB_SHA" >> $BASEDIR/build/elite.cls
+        echo "% Auto-built by GitHub Actions" >> $BUILD_DIR/$CLASS_NAME.cls
+        echo "% Latest Commit-Hash: $GITHUB_SHA" >> $BUILD_DIR/$CLASS_NAME.cls
     fi
 
-    cd $BASEDIR/src/
+    cd $SOURCE_DIR/
     for STYFILE in *.sty
     do
         STYCONTENT=$(cat ${STYFILE})  
         echo_safe_filecontents $STYFILE "$STYCONTENT"
     done
-    cd $BASEDIR
+    cd $BASE_DIR
 
-    echo "" >> $BASEDIR/build/elite.cls
-    cat $BASEDIR/src/elite.cls >> $BASEDIR/build/elite.cls
+    echo "" >> $BUILD_DIR/$CLASS_NAME.cls
+    echo $CLASS_NAME
+    cat $SOURCE_DIR/$CLASS_NAME.cls >> $BUILD_DIR/$CLASS_NAME.cls
 }
 
 function echo_safe_filecontents {
@@ -50,7 +60,7 @@ function echo_safe_filecontents {
 #$FILECONTENTS
 #\end{filecontents}
 #\fi\endgroup
-#" >> $BASEDIR/build/elite.cls
+#" >> $BUILD_DIR/${CLASS_NAME}.cls
 
     echo "%
 % External File: $FILENAME
@@ -58,34 +68,36 @@ function echo_safe_filecontents {
 \begin{filecontents}[overwrite]{$FILENAME}
 $FILECONTENTS
 \end{filecontents}
-" >> $BASEDIR/build/elite.cls
+" >> $BUILD_DIR/$CLASS_NAME.cls
 }
 
 function build_docs {
-    mkdir -p $BASEDIR/build/docs/
-    cd $BASEDIR/docs
-    pdflatex -halt-on-error -output-directory $BASEDIR/build/docs $BASEDIR/docs/elite.tex
-    cd $BASEDIR
+    mkdir -p $BUILD_DOCS_DIR/
+    cd $DOCS_SOURCE_DIR
+    pdflatex -halt-on-error -output-directory $BUILD_DOCS_DIR -jobname $CLASS_NAME $DOCS_SOURCE_DIR/$DOCS_SOURCE
+    cd $BUILD_DOCS_DIR
+    _temp=$(makeindex *.idx)
+    cd $BASE_DIR
 }
 
 function install_local {
-    mkdir -p ${TEXMFHOME}/tex/latex/elite
-    install -m 0644 ${BASEDIR}/build/elite.cls ${TEXMFHOME}/tex/latex/elite/elite.cls
+    mkdir -p ${TEXMFHOME}/tex/latex/$CLASS_NAME
+    install -m 0644 ${BASE_DIR}/build/$CLASS_NAME.cls $TEXMFHOME/tex/latex/$CLASS_NAME/$CLASS_NAME.cls
 }
 
 function install_docs_local {
-    mkdir -p ${TEXMFHOME}/doc/latex/elite
-	install -m 0644 ${BASEDIR}/build/docs/elite.pdf ${TEXMFHOME}/doc/latex/elite/elite.pdf
+    mkdir -p ${TEXMFHOME}/doc/latex/$CLASS_NAME
+	install -m 0644 ${BASE_DIR}/build/docs/$CLASS_NAME.pdf ${TEXMFHOME}/doc/latex/$CLASS_NAME/$CLASS_NAME.pdf
 }
 
 function install_global {
-    mkdir -p ${TEXMFMAIN}/tex/latex/elite
-    install -m 0644 ${BASEDIR}/build/elite.cls ${TEXMFMAIN}/tex/latex/elite/elite.cls
+    mkdir -p ${TEXMFMAIN}/tex/latex/$CLASS_NAME
+    install -m 0644 ${BASE_DIR}/build/$CLASS_NAME.cls ${TEXMFMAIN}/tex/latex/$CLASS_NAME/$CLASS_NAME.cls
 }
 
 function install_docs_global {
-    mkdir -p ${TEXMFMAIN}/doc/latex/elite
-	install -m 0644 ${BASEDIR}/build/docs/elite.pdf ${TEXMFMAIN}/doc/latex/elite/elite.pdf
+    mkdir -p ${TEXMFMAIN}/doc/latex/$CLASS_NAME
+	install -m 0644 ${BASE_DIR}/build/docs/$CLASS_NAME.pdf ${TEXMFMAIN}/doc/latex/$CLASS_NAME/$CLASS_NAME.pdf
 }
 
 #
@@ -154,7 +166,7 @@ do
             echo_help
             ;;
         *)
-            buildprocedure_${SUBCOMMAND}
+            buildprocedure_$SUBCOMMAND
             if [ $? = 127 ]; then
                 echo "Error: '$SUBCOMMAND' is not a known build procedure." >&2
                 echo "       Run '$BASENAME --help' for a list of known subcommands." >&2

@@ -1,6 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{elite-definitions}[2021/08/03 Elite-Definitions]
 
+\RequirePackage{xcolor}
+
 \setlength{\changebarsep}{10pt}
 \setlength{\changebarwidth}{2pt}
 
@@ -12,11 +14,10 @@
 %   5: Content
 \newcommand{\abstractDefinition}[5]{
     \noindent
-    \parbox[t]{\textwidth}{
-        #2$\:$
+    \parbox[t]{\linewidth}{
+        #2{ } %$\:$
         \textbf{\textcolor{#3}{#4}}
         \cbstart
-        %(\textit{#2})
         \cbcolor{#3}
             #5 \par
         \cbend
@@ -25,11 +26,10 @@
     \par % End the line
 }
 
-
 \newcommand{\definition}[3][1]{
     \abstractDefinition{#1}{\faArchive}{kit-blue}{#2}{#3}
     % Stichwortverzeichnis am Ende erzeugen.
-    \index{
+    \index[definition]{
         \vspace{0.2cm}
         \hspace*{-0.5cm}
         \underline{\textsc{#2}}\\
