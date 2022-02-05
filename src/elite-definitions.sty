@@ -1,0 +1,50 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{elite-definitions}[2021/08/03 Elite-Definitions]
+
+\setlength{\changebarsep}{10pt}
+\setlength{\changebarwidth}{2pt}
+
+% PARAMS:
+%   1: Space
+%   2: Icon
+%   3: Color
+%   4: Title
+%   5: Content
+\newcommand{\abstractDefinition}[5]{
+    \noindent
+    \parbox[t]{\textwidth}{
+        #2$\:$
+        \textbf{\textcolor{#3}{#4}}
+        \cbstart
+        %(\textit{#2})
+        \cbcolor{#3}
+            #5 \par
+        \cbend
+        \ifnum#1=0\break\else\textsc{}\fi
+    }
+    \par % End the line
+}
+
+
+\newcommand{\definition}[3][1]{
+    \abstractDefinition{#1}{\faArchive}{kit-blue}{#2}{#3}
+    % Stichwortverzeichnis am Ende erzeugen.
+    \index{
+        \vspace{0.2cm}
+        \hspace*{-0.5cm}
+        \underline{\textsc{#2}}\\
+        #3
+    }
+}
+
+\newcommand{\defwarn}[3][1]{
+    \abstractDefinition{#1}{\textcolor{kit-orange}{\faExclamationTriangle}}{kit-orange}{#2}{#3}
+}
+
+\newcommand{\defproblem}[3][1]{
+    \abstractDefinition{#1}{\textcolor{kit-red}{\faExclamationCircle}}{kit-red}{#2}{#3}
+}
+
+\providecommand{\defhint}[3][1]{
+    \abstractDefinition{#1}{\textcolor{kit-lightgreen}{\faLightbulb[regular]}}{kit-lightgreen}{#2}{#3}
+}

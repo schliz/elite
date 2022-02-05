@@ -1,0 +1,163 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{elite-listings}[2021/08/03 Elite Listings]
+
+\renewcommand{\lstlistingname}{Algorithmus} % Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{Algorithmenübersicht} % List of Listings -> List of Algorithms
+
+%
+% Default Listing Color Scheme
+%
+
+% used when there is only one set of keywords (e.g. java)
+% also used for assembler registers
+\providecommand{\defaultKeywordStylePrimary}{\color{kit-red}}
+
+% used for secondary keywords and assembler instructions
+\providecommand{\defaultKeywordStyleSecondary}{\color{kit-blue}}
+
+% other keyword highlighting (C preprocessor or assembler directives)
+\providecommand{\defaultKeywordStyleAlt}{\color{kit-orange}}
+
+\providecommand{\defaultStringStyle}{\color{kit-lightgreen}}
+\providecommand{\defaultCommentStyle}{\color{kit-green}}
+
+%
+% Listing Language Definitions
+%
+
+\lstdefinelanguage{pseudocode}
+{
+    keywords={Function, while, do, invariant, return, for, end, if, else, Class, of, to, Pointer, this, assert, address, Procedure, then, done, downto, from},
+    keywordstyle=\defaultKeywordStylePrimary\textbf,
+%
+    comment=[l]//,
+    morecomment=[l]\#,
+    morecomment=[s]{/*}{*/},
+    commentstyle=\defaultCommentStyle,
+%
+    string=[b]",
+    stringstyle=\defaultStringStyle
+}
+
+\lstdefinelanguage{java}
+{
+    keywords={_, abstract, assert, boolean, break, byte, case, catch, char, class, const, continue, default, do, double, else, enum, extends, final, finally, float, for,
+        goto, if, implements, import, instanceof, int, interface, long, native, new, package, private, protected, public, return, short, static, strictfp, switch, synchronized,
+        this, throw, throws, transient, try, void, volatile, while, non-sealed, permits, record, sealed, var, yield, true, false, null},
+    keywordstyle=\defaultKeywordStylePrimary,
+%
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\defaultCommentStyle,
+%
+    morestring=[b]",
+    stringstyle=\defaultStringStyle,
+%
+    breaklines=true,
+}
+
+\lstdefinelanguage{clang}
+{
+    keywords=[1]{auto, break, case, char, const, continue, default, do, double, else, enum, extern, float, for, goto, if, inline, int, long, register, restrict, return,
+        short, signed, sizeof, static, struct, switch, typedef, union, unsigned, void, volatile, while, _Alignas, _Alignof, _Atomic, _Bool, _Complex, _Decimal128, _Decimal32,
+        _Decimal64, _Generic, _Imaginary, _Noreturn, _Static_assert, _Thread_local},
+    keywordstyle=[1]\defaultKeywordStylePrimary,
+%
+    keywords=[2]{\#include, \#define, \#undef, \#ifdef, \#ifndef, \#else, \#elseif, \#endif, \#pragma, \#error, \#line},
+    keywordstyle=[2]\color{kit-orange},
+%
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\defaultCommentStyle,
+%
+    morestring=[b]",
+    stringstyle=\defaultStringStyle,
+%
+    breaklines=true,
+}
+
+\lstdefinelanguage{80x86}
+{
+    keywords=[1]{AAA, AAD, AAM, AAS, ADC, ADD, AND, CALL, CBW, CLC, CLD, CLI, CMC, CMP, CMPSB, CMPSW, CWD, DAA, DAS, DEC, DIV, ESC, HLT, IDIV, IMUL, IN, INC, INT, INTO,
+        IRET, Jcc, JCXZ, JMP, LAHF, LDS, LEA, LES, LOCK, LODSB, LODSW, LOOP/LOOPx, MOV, MOVSB, MOVSW, MUL, NEG, NOP, NOT, OR, OUT, POP, POPF, PUSH, PUSHF, RCL, RCR, REPxx,
+        RET, RETN, RETF, ROL, ROR, SAHF, SAL, SAR, SBB, SCASB, SCASW, SHL, SHR, STC, STD, STI, STOSB, STOSW, SUB, TEST, WAIT, XCHG, XLAT, XOR, BOUND, ENTER, INS, LEAVE, OUTS,
+        POPA, PUSHA, PUSH, IMUL, SHL, SHR, SAL, SAR, ROL, ROR, RCL, RCR, ARPL, CLTS, LAR, LGDT, LIDT, LLDT, LMSW, LOADALL, LSL, LTR, SGDT, SIDT, SLDT, SMSW, STR, VERR, VERW,
+        BSF, BSR, BT, BTC, BTR, BTS, CDQ, CMPSD, CWDE, IBTS, IMUL, INSD, IRETx, JECXZ, LFS, LGS, LSS, LODSD, LOOPW, LOOPccW, LOOPD, LOOPccD, MOV, MOVSD, MOVSX, MOVZX, OUTSD,
+        POPAD, POPFD, PUSHAD, PUSHFD, SCASD, SETcc, SHLD, SHRD, STOSD, XBTS, BSWAP, CMPXCHG, INVD, INVLPG, WBINVD, XADD, CPUID, CMPXCHG8B, RDMSR, RDTSC, WRMSR, RSM, RDPMC,
+        SYSCALL, SYSRET, CMOVcc, UD2, SYSENTER, SYSEXIT, NOP, PREFETCHT0, PREFETCHT1, PREFETCHT2, PREFETCHNTA, SFENCE, CLFLUSH, LFENCE, MFENCE, MOVNTI, PAUSE, MONITOR EAX,
+        ECX, EDX, MWAIT, CRC32, CDQE, CQO, CMPSQ, CMPXCHG16B, IRETQ, JRCXZ, LODSQ, MOVSXD, POPFQ, PUSHFQ, RDTSCP, SCASQ, STOSQ, SWAPGS, CLGI, INVLPGA, SKINIT, STGI, VMLOAD,
+        VMMCALL, VMRUN, VMSAVE, INVEPT, INVVPID, VMFUNC, VMPTRLD, VMPTRST, VMCLEAR, VMREAD, VMWRITE, VMCALL, VMLAUNCH, VMRESUME, VMXOFF, VMXON, LZCNT, POPCNT, ANDN, BEXTR,
+        BLSI, BLSMSK, BLSR, TZCNT, BZHI, MULX, PDEP, PEXT, RORX, SARX, SHRX, SHLX, BEXTR, BLCFILL, BLCI, BLCIC, BLCMSK, BLCS, BLSFILL, BLSIC, T1MSKC, TZMSK, PCLMULQDQ,
+        PCLMULLQLQDQ, PCLMULHQLQDQ, PCLMULLQHQDQ, PCLMULHQHQDQ,
+        aaa, aad, aam, aas, adc, add, and, call, cbw, clc, cld, cli, cmc, cmp, cmpsb, cmpsw, cwd, daa, das, dec, div, esc, hlt, idiv, imul,
+        in, inc, int, into, iret, jcc, jcxz, jmp, lahf, lds, lea, les, lock, lodsb, lodsw, loop/loopx, mov, movsb, movsw, mul, neg, nop, not, or, out, pop, popf, push, pushf,
+        rcl, rcr, repxx, ret, retn, retf, rol, ror, sahf, sal, sar, sbb, scasb, scasw, shl, shr, stc, std, sti, stosb, stosw, sub, test, wait, xchg, xlat, xor, bound, enter,
+        ins, leave, outs, popa, pusha, push, imul, shl, shr, sal, sar, rol, ror, rcl, rcr, arpl, clts, lar, lgdt, lidt, lldt, lmsw, loadall, lsl, ltr, sgdt, sidt, sldt, smsw,
+        str, verr, verw, bsf, bsr, bt, btc, btr, bts, cdq, cmpsd, cwde, ibts, imul, insd, iretx, jecxz, lfs, lgs, lss, lodsd, loopw, loopccw, loopd, loopccd, mov, movsd, movsx,
+        movzx, outsd, popad, popfd, pushad, pushfd, scasd, setcc, shld, shrd, stosd, xbts, bswap, cmpxchg, invd, invlpg, wbinvd, xadd, cpuid, cmpxchg8b, rdmsr, rdtsc, wrmsr,
+        rsm, rdpmc, syscall, sysret, cmovcc, ud2, sysenter, sysexit, nop, prefetcht0, prefetcht1, prefetcht2, prefetchnta, sfence, clflush, lfence, mfence, movnti, pause, monitor,
+        eax, ecx, edx, mwait, crc32, cdqe, cqo, cmpsq, cmpxchg16b, iretq, jrcxz, lodsq, movsxd, popfq, pushfq, rdtscp, scasq, stosq, swapgs, clgi, invlpga, skinit, stgi, vmload,
+        vmmcall, vmrun, vmsave, invept, invvpid, vmfunc, vmptrld, vmptrst, vmclear, vmread, vmwrite, vmcall, vmlaunch, vmresume, vmxoff, vmxon, lzcnt, popcnt, andn, bextr, blsi,
+        blsmsk, blsr, tzcnt, bzhi, mulx, pdep, pext, rorx, sarx, shrx, shlx, bextr, blcfill, blci, blcic, blcmsk, blcs, blsfill, blsic, t1mskc, tzmsk, pclmulqdq, pclmullqlqdq,
+        pclmulhqlqdq, pclmullqhqdq, pclmulhqhqdq},
+    keywordstyle=[1]\defaultKeywordStyleSecondary,
+%
+    keywords=[2]{RAX, RBX, RCX, RDX, RBP, RSI, RDI, RSP, R8, R9, R10, R11, R12, R13, R14, R15, FPR0, FPR1, FPR2, FPR3, FPR4,
+        FPR5, FPR6, FPR7, MMX0, MMX1, MMX2, MMX3, MMX4, MMX5, MMX6, MMX7, XMM0, XMM1, XMM2, XMM3, XMM4, XMM5, XMM6, XMM7, XMM8, XMM9, XMM10, XMM11, XMM12, XMM13, XMM14, XMM15,
+        RIP, RFLAGS, FSW, FCW, FTW, EBP, ESP, EDX rax, rbx, rcx, rdx, rbp, rsi, rdi, rsp, r8, r9, r10, r11, r12, r13, r14, r15, fpr0, fpr1, fpr2, fpr3, fpr4, fpr5, fpr6, fpr7,
+        mmx0, mmx1, mmx2, mmx3, mmx4, mmx5, mmx6, mmx7, xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7, xmm8, xmm9, xmm10, xmm11, xmm12, xmm13, xmm14, xmm15, rip, rflags, fsw,
+        fcw, ftw, ebp, esp, edx},
+    keywordstyle=[2]\defaultKeywordStylePrimary,
+%
+    comment=[l];,
+    commentstyle=\defaultCommentStyle,
+%
+    morestring=[b]",
+    stringstyle=\defaultStringStyle
+}
+
+\lstdefinelanguage{riscv}
+{
+    keywords=[1]{add, addi, and, andi, auipc, b, beq, beqz, bge, bgeu, bgez, bgt, bgtu, bgtz, ble, bleu, blez, blt, bltu, bltz, bne, bnez, call, csrc, csrci, csrr,
+        csrrc, csrrci, csrrs, csrrsi, csrrw, csrrwi, csrs, csrsi, csrw, csrwi, div, divu, ebreak, ecall, fabs.d, fabs.s, fadd.d, fadd.s, fclass.d, fclass.s,
+        fcvt.d.s, fcvt.d.w, fcvt.d.wu, fcvt.s.d, fcvt.s.w, fcvt.s.wu, fcvt.w.d, fcvt.w.s, fcvt.wu.d, fcvt.wu.s, fdiv.d, fdiv.s, fence, fence.i, feq.d, feq.s,
+        fge.d, fge.s, fgt.d, fgt.s, fld, fle.d, fle.s, flt.d, flt.s, flw, flwd, fmadd.d, fmadd.s, fmax.d, fmax.s, fmin.d, fmin.s, fmsub.d, fmsub.s, fmul.d,
+        fmul.s, fmv.d, fmv.s, fmv.s.x, fmv.w.x, fmv.x.s, fmv.x.w, fneg.d, fneg.s, fnmadd.d, fnmadd.s, fnmsub.d, fnmsub.s, frcsr, frflags, frrm, frsr, fscsr, fsd,
+        fsflags, fsflagsi, fsgnj.d, fsgnj.s, fsgnjn.d, fsgnjn.s, fsgnjx.d, fsgnjx.s, fsqrt.d, fsqrt.s, fsrm, fsrmi, fssr, fsub.d, fsub.s, fsw, j, jal, jalr, jr,
+        la, lb, lbu, lh, lhu, li, lui, lw, mul, mulh, mulhsu, mulhu, mv, neg, nop, not, or, ori, rdcycle, rdcycleh, rdinstret, rdinstreth, rdtime, rdtimeh, rem,
+        remu, ret, sb, seqz, sgt, sgtu, sgtz, sh, sll, slli, slt, slti, sltiu, sltu, sltz, snez, sra, srai, srl, srli, sub, sw, tail, uret, wfi, xor, xori},
+    keywordstyle=[1]\defaultKeywordStyleSecondary,
+%
+    keywords=[2]{ascii, asciz, byte, data, double, end_macro, eqv, extern, float, globl, half, include, macro, section, space, string, text, word},
+    keywordstyle=[2]\defaultKeywordStyleAlt,
+%
+    keywords=[3]{zero, ra, sp, gp, tp, fp, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, a0, a1, a2, a3, a4, a5, a6, a7, t0, t1, t2, t3, t4, t5, t6},
+    keywordstyle=[3]\defaultKeywordStylePrimary,
+%
+    morestring=[b]",
+    stringstyle=\defaultStringStyle,
+%
+    morecomment=[l];,
+    commentstyle=\defaultCommentStyle
+}
+
+%
+% Listing Declaration/Environments
+%
+
+\lstnewenvironment{CodeListing}[1][]{
+    \filbreak
+    \lstset{
+        basicstyle=\small\ttfamily,
+        sensitive=false,
+        mathescape=true,
+        frame=single,
+        captionpos=b,
+        numbers=left,
+        literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1,
+        #1
+    }
+}{}
+
+\DeclareRobustCommand{\begincode}{\begin{minipage}{\textwidth}}
+\DeclareRobustCommand{\endcode}{\end{minipage}}

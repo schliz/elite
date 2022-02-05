@@ -1,0 +1,49 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{elite-utils}[2021/08/03 Elite Utlities]
+
+\newcommand{\important}[1]{{\textcolor{kit-red}{\fontseries{sb}\selectfont#1}}}
+\newcommand{\highlight}[1]{{\textcolor{kit-green}{\fontseries{sb}\selectfont#1}}}
+
+\newcommand{\formalWord}[1]{
+    {\color{kit-blue}\texttt{#1}}
+}
+
+\newcommand{\angled}[1]{
+    $\langle$#1$\rangle$
+}
+\newcommand{\mathangled}[1]{
+    \langle #1\rangle
+}
+
+% Hacky hacky...
+\providecommand{\emptyline}[0]{\vspace{1em}}
+\providecommand{\n}[0]{\emptyline}
+
+% TODO-Command
+\providecommand{\todo}[1]{
+    \PackageWarning{TODO}{#1}
+}
+
+%Figures
+\providecommand{\fig}[3][width=0.8\linewidth]{
+    \parbox[t]{\linewidth}{
+        \captionsetup{type=figure}
+        \begin{center}
+        \includegraphics[#1]{#3}
+        \captionof{figure}{#2}
+        \end{center}
+    }
+}
+
+% Wrapfig Command Parameters:
+% 1 (optional): dimensions of includegraphics image
+% 2: orientation (l/c/r)
+% 3: wrapfig size
+% 4: caption
+% 5: image
+\providecommand{\wrapfig}[5][width=0.9\linewidth]{
+    \begin{wrapfigure}{#2}{#3}
+        \includegraphics[width=0.9\linewidth]{#5}
+        \caption{#4}
+    \end{wrapfigure}
+}

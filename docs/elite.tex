@@ -1,0 +1,181 @@
+\documentclass[
+    narrow,
+    fontstyle=light,
+    babelparam=ngerman
+]{elite}
+
+\usepackage[utf8]{inputenc} % Sonderzeichen ermöglichen
+\usepackage{blindtext}
+
+% \usepackage[a4paper, margin=1in]{geometry}
+
+\title{S32 \LaTeX{} Document-Class \enquote{elite}}
+\author{Christian Schliz und Julian Keck}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Allgemeines}
+
+\section*{Section}
+\subsection*{Sub-Section}
+\subsubsection*{Sub-Sub-Section}
+\paragraph*{Paragraph}
+
+\paragraph*{Textfarben}
+
+\begin{itemize}
+    \item \texttt{\textbackslash{}important} \important{Wichtige Hervorhebung}
+    \item \texttt{\textbackslash{}highlight} \highlight{Textmarkierung}
+    \item \texttt{\textbackslash{}formalWord} \formalWord{Formales Wort}
+\end{itemize}
+
+\section{Übersicht über die Textgrößen}
+
+{\tiny tiny}\\
+{\scriptsize scriptsize}\\
+{\footnotesize footnotesize}\\
+{\small small}\\
+{\normalsize normalsize}\\
+{\large large}\\
+{\Large Large}\\
+{\LARGE LARGE}\\
+{\huge huge}\\
+{\Huge HUGE}\\
+
+\section{Elite Definitionen}
+
+\definition{Definition}{%
+    Eine Definition wird mit dem Befehl \texttt{\textbackslash{}definition\{\textit{name}\}\{\textit{inhalt}\}}
+    erstellt. Diese und weitere Definitionsblöcke basieren auf dem Befehl \texttt{\textbackslash{}abstractDefinition}
+    und beinhalten eine Minipage mit dem jeweiligen Inhalt.
+}
+
+\defwarn{Warnung}{%
+    wird per \texttt{\textbackslash{}defwarn\{\textit{Warnung}\}\{\textit{inhalt}\}} erstellt.
+}
+
+\defproblem{Problem}{%
+    wird per \texttt{\textbackslash{}defproblem\{\textit{Problem}\}\{\textit{inhalt}\}} erstellt.
+}
+
+\defhint{Hinweis}{%
+    wird per \texttt{\textbackslash{}defhint\{\textit{Hinweis}\}\{\textit{inhalt}\}} erstellt.
+}
+
+\fig{Worsch (\texttt{\textbackslash{}fig\{Unterschrift\}\{Quelle\}})}{./worsch}
+\newpage
+
+\section{Wrapfigure Test}
+
+In diesem Abschnitt wird ein normales wrapfig benutzt, Codebeispiel unten auf der Seite.\par
+
+\blindtext
+\begin{wrapfigure}{r}{0.25\textwidth}
+    \includegraphics[width=0.9\linewidth]{./worsch}
+    \caption{GBI Prof.}
+    \label{fig:wrapfigure}
+\end{wrapfigure}
+\blindtext
+\blindtext
+
+\begin{CodeListing}[title=manuelle Wrapfig]
+\begin{wrapfigure}{r}{0.25\textwidth}
+    \includegraphics[width=0.9\linewidth]{./worsch}
+    \caption{GBI Prof.}
+    \label{fig:wrapfigure}
+\end{wrapfigure}
+\end{CodeListing}
+
+\newpage
+
+\wrapfig{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
+
+\blindtext
+
+\begin{CodeListing}[title=Macro Wrapfigure]
+\wrapfig{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
+\end{CodeListing}
+
+\newpage
+\section{Algorithmen und so}
+\blindtext\blindtext\blindtext\blindtext\blindtext\
+
+\begin{CodeListing}[caption=Beispiel Code-Listing]
+\begincode
+\begin{CodeListing}[language=java, caption=Beispiel-Code]
+public class Example {
+    public static void main(String args[]) {
+        System.out.println("Hello, World!");
+    }
+}
+\end{CodeListing
+\endcode
+\end{CodeListing}
+
+\begin{CodeListing}[language=pseudocode]
+Function test(a: $\mathbb{N}$) {
+    while peter is doof do
+        toete peter
+        asdfasdf    # yes
+        asdfasdf    // test
+        asdfasdf
+        asdf
+}
+\end{CodeListing}
+
+\blindtext\n
+
+\begincode
+\begin{CodeListing}[language=java, caption=Beispiel-Code]
+public class Example {
+    public static void main(String args[]) {
+        System.out.println("Hello, World!");
+    }
+}
+\end{CodeListing}
+\endcode
+
+\blindtext\n
+
+\begincode
+\begin{CodeListing}[language=80x86, title=Intel 80x86 Assembler Beispiel]
+push    ebp       ; save calling function's stack frame (ebp)
+mov     ebp, esp  ; make a new stack frame on top of our caller's stack
+sub     esp, 4    ; allocate 4 bytes of stack space
+\end{CodeListing}
+\endcode
+
+\begincode
+\begin{CodeListing}[language=clang, title=Example C-Code]
+#include <stdlio.h>
+
+// Das hier ist ein Hello-World Programm in C
+int main(int argc, char** argv)
+{
+    printf("Hello, World!\n");
+    return 0;
+}
+\end{CodeListing}
+\endcode
+
+\begincode
+\begin{CodeListing}[language=riscv, title=Example RISC-V Assembler]
+        .data                       ; start of data segment
+str0:   .asciz "Hello, World!\n"    ; define string
+
+        .text                       ; start of text segment
+        la a0, str0                 ; load start adress of str0 into a0
+        li a7, 4                    ; load command 4 into a7
+        ecall                       ; environment call
+\end{CodeListing}
+\endcode
+
+\printindex
+\lstlistoflistings
+\listoffigures
+\end{document}
