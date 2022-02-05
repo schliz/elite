@@ -70,15 +70,21 @@ function build_docs {
 
 function install_local {
     mkdir -p ${TEXMFHOME}/tex/latex/elite
-    mkdir -p ${TEXMFHOME}/doc/latex/elite
     install -m 0644 ${BASEDIR}/build/elite.cls ${TEXMFHOME}/tex/latex/elite/elite.cls
+}
+
+function install_docs_local {
+    mkdir -p ${TEXMFHOME}/doc/latex/elite
 	install -m 0644 ${BASEDIR}/build/docs/elite.pdf ${TEXMFHOME}/doc/latex/elite/elite.pdf
 }
 
 function install_global {
     mkdir -p ${TEXMFMAIN}/tex/latex/elite
-    mkdir -p ${TEXMFMAIN}/doc/latex/elite
     install -m 0644 ${BASEDIR}/build/elite.cls ${TEXMFMAIN}/tex/latex/elite/elite.cls
+}
+
+function install_docs_global {
+    mkdir -p ${TEXMFMAIN}/doc/latex/elite
 	install -m 0644 ${BASEDIR}/build/docs/elite.pdf ${TEXMFMAIN}/doc/latex/elite/elite.pdf
 }
 
@@ -98,23 +104,25 @@ function buildprocedure_build {
 
 function buildprocedure_docs {
     echo "> docs"
-    build_docs
+    # perform twice to create correct index
     build_docs
     build_docs
 }
 
 function buildprocedure_local {
     buildprocedure_build
-    # buildprocedure_docs
     echo "> local"
     install_local
+    buildprocedure_docs
+    install_docs_local
 }
 
 function buildprocedure_global {
     buildprocedure_build
-    buildprocedure_docs
     echo "> global"
     install_global
+    buildprocedure_docs
+    install_docs_global
 }
 
 function echo_help {

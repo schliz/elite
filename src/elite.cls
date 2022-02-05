@@ -7,7 +7,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{elite}[2021/08/03 S32-Class]
-\LoadClass{article}
+\LoadClass[document]{article}
 
 \RequirePackage{kvoptions}
 
@@ -23,34 +23,39 @@
 \DeclareOption{narrow}{\renewcommand{\elitePageMargin}{1in}}
 \ProcessOptions\relax
 
+
+%
+% Package-Dependencies
+%
+
 % Load babel package before anything else
 \RequirePackage[\elite@babelparam]{babel}
 
-% Package-Dependencies
-\RequirePackage[table]{xcolor}   % Farben
-\RequirePackage{fontawesome5}    % Fontawesome
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[color, leftbars]{changebar}     % Farbige Balken neben Definitionen
-\RequirePackage{graphicx}   % Bilder einbinden
-\RequirePackage{wrapfig}    % Bilder formatieren
-\RequirePackage{booktabs}   % Schöne Tabellen
-\RequirePackage{csquotes}   % \enquote command
-\RequirePackage{environ}    % Better Environments
+\RequirePackage[T1]{fontenc}        % text font
+\RequirePackage[utf8]{inputenc}     % input encoding
 
-% Math-Packages (idk why but it doesn't work without :P)
+\RequirePackage[table]{xcolor}      % colors
+\RequirePackage{fontawesome5}       % fontawesome icons
+\RequirePackage[color, leftbars]{changebar}     % colored bars next to definitions
+\RequirePackage{graphicx}   % include pictures
+\RequirePackage{wrapfig}    % format pictures
+\RequirePackage{booktabs}   % prettier tables
+\RequirePackage{csquotes}   % \enquote command
+\RequirePackage{environ}    % better environments
+
+% Math packages and symbols
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
 
-% Index and Listing packages
+% Index and listing packages
 \RequirePackage{caption}
 \RequirePackage{imakeidx}
 \RequirePackage{hyperref}
-\RequirePackage{listings}       % Quelltext
-\RequirePackage{sourcecodepro}  % Quelltext Font
+\RequirePackage{listings}       % source code listings
+\RequirePackage{sourcecodepro}  % soruce code font
 
-% Custom packages
+% Elite Packages
 \RequirePackage{elite-listings}
 \RequirePackage{elite-colors}
 \RequirePackage{elite-definitions}
@@ -59,25 +64,28 @@
 % Dependencies changed by options
 % \RequirePackage[\elite@fontstyle]{sourceserifpro}
 
+
+%
+% Listings and Geometry
+%
 \AtEndOfClass{
+    % captions and listing index
     \addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
     \addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
     \makeindex[title=Definitionenübersicht, columns=2, intoc]
-}
 
-% Class-Dependencies
-% \LoadClass[document]{article}
-\AtEndOfClass{
     \RequirePackage[a4paper, margin=\elitePageMargin]{geometry}
     % fix spacing and indentation
     \frenchspacing
     \setlength{\parindent}{0em}
 }
 
-% remove indentation
 
-% Command Redefinition
+%
+% Style Utilities
+%
 
+% Renewing \maketitle deprecated, still leaving here for now
 %\renewcommand{\maketitle}{%
 %    \twocolumn[%
 %        \fontsize{50}{60}\fontfamily{phv}\fontseries{b}%
@@ -87,9 +95,12 @@
 %        ]%
 %}
 
+% change standard sizes
 \renewcommand\LARGE{\@setfontsize\LARGE{13pt}{16}}
 \renewcommand\Large{\@setfontsize\Large{11pt}{14}}
 \renewcommand\large{\@setfontsize\large{10pt}{13}}
+
+% change header sizes
 
 \renewcommand{\section}{%
     \@startsection

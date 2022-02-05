@@ -4,131 +4,179 @@
     babelparam=ngerman
 ]{elite}
 
+% uncomment this in order to debug visual boxes (requires LuaLaTeX)
+%\usepackage{lua-visual-debug}
+
 \usepackage[utf8]{inputenc} % Sonderzeichen ermöglichen
 \usepackage{blindtext}
 
 % \usepackage[a4paper, margin=1in]{geometry}
 
 \title{S32 \LaTeX{} Document-Class \enquote{elite}}
-\author{Christian Schliz und Julian Keck}
+\author{Christian Schliz \& Julian Keck}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+\vspace{2cm}
+
+\defhint{Notes on I18n}{This document was originally intended to be used for documents
+entirely in the german language. If you want to use this class for other languages, you
+might need to redefine some commands and macros.}
+
+\vspace{2cm}
+
 \tableofcontents
 \newpage
 
-\section{Allgemeines}
+\section{General}
+
+\begin{itemize}
+    \item \code{\textbackslash{}tableofcontents}: print table of contents
+\end{itemize}
+
+\paragraph*{Typically end of document:}
+
+\begin{itemize}
+    \item \code{\textbackslash{}printindex}: print definition index
+    \item \code{\textbackslash{}lstlistoflistings}: print code listing index
+    \item \code{\textbackslash{}listoffigures}: print figure index
+\end{itemize}
+
+\paragraph*{Text Formatting}
+
+\begin{itemize}
+    \item \code{\textbackslash{}important}: \important{Important mark}
+    \item \code{\textbackslash{}highlight}: \highlight{Text highlighting}
+    \item \code{\textbackslash{}formalWord}: \formalWord{formal string definition}
+    \item \code{\textbackslash{}code}: \code{same effect as \textbackslash{}texttt}
+\end{itemize}
+
+\section{Overview of all Font Sizes}
+
+\begin{tabular}{rl}
+    \code{tiny} & {\tiny tiny} \\
+    \code{scriptsize} & {\scriptsize scriptsize} \\
+    \code{footnotesize} & {\footnotesize footnotesize} \\
+    \code{small} & {\small small} \\
+    \code{normalsize} & {\normalsize normalsize} \\
+    \code{large} & {\large large} \\
+    \code{Large} & {\Large Large} \\
+    \code{LARGE} & {\LARGE LARGE} \\
+    \code{huge} & {\huge huge} \\
+    \code{Huge} & {\Huge Huge}
+\end{tabular}
 
 \section*{Section}
 \subsection*{Sub-Section}
 \subsubsection*{Sub-Sub-Section}
 \paragraph*{Paragraph}
 
-\paragraph*{Textfarben}
-
-\begin{itemize}
-    \item \texttt{\textbackslash{}important} \important{Wichtige Hervorhebung}
-    \item \texttt{\textbackslash{}highlight} \highlight{Textmarkierung}
-    \item \texttt{\textbackslash{}formalWord} \formalWord{Formales Wort}
-\end{itemize}
-
-\section{Übersicht über die Textgrößen}
-
-{\tiny tiny}\\
-{\scriptsize scriptsize}\\
-{\footnotesize footnotesize}\\
-{\small small}\\
-{\normalsize normalsize}\\
-{\large large}\\
-{\Large Large}\\
-{\LARGE LARGE}\\
-{\huge huge}\\
-{\Huge HUGE}\\
-
-\section{Elite Definitionen}
+\section{Elite Definitions}
 
 \definition{Definition}{%
-    Eine Definition wird mit dem Befehl \texttt{\textbackslash{}definition\{\textit{name}\}\{\textit{inhalt}\}}
-    erstellt. Diese und weitere Definitionsblöcke basieren auf dem Befehl \texttt{\textbackslash{}abstractDefinition}
-    und beinhalten eine Minipage mit dem jeweiligen Inhalt.
+    A definition is created with the command \texttt{\textbackslash{}definition\{\textit{name}\}\{\textit{content}\}}.
+    All styles are based on \texttt{\textbackslash{}abstractDefinition}
 }
 
 \defwarn{Warnung}{%
-    wird per \texttt{\textbackslash{}defwarn\{\textit{Warnung}\}\{\textit{inhalt}\}} erstellt.
+    is created by \texttt{\textbackslash{}defwarn\{\textit{Warnung}\}\{\textit{content}\}}
 }
 
 \defproblem{Problem}{%
-    wird per \texttt{\textbackslash{}defproblem\{\textit{Problem}\}\{\textit{inhalt}\}} erstellt.
+    is created by \texttt{\textbackslash{}defproblem\{\textit{Problem}\}\{\textit{content}\}}
 }
 
 \defhint{Hinweis}{%
-    wird per \texttt{\textbackslash{}defhint\{\textit{Hinweis}\}\{\textit{inhalt}\}} erstellt.
+    is created by \texttt{\textbackslash{}defhint\{\textit{Hinweis}\}\{\textit{content}\}}
 }
 
-\fig{Worsch (\texttt{\textbackslash{}fig\{Unterschrift\}\{Quelle\}})}{./worsch}
 \newpage
 
-\section{Wrapfigure Test}
+\section{Include Graphics and Figures}
 
-In diesem Abschnitt wird ein normales wrapfig benutzt, Codebeispiel unten auf der Seite.\par
+There are multiple ways to include images and figures inside of your doument.
+When drawing attention towards an image, you should use the \code{\textbackslash{}fig} command:
 
-\blindtext
-\begin{wrapfigure}{r}{0.25\textwidth}
-    \includegraphics[width=0.9\linewidth]{./worsch}
-    \caption{GBI Prof.}
-    \label{fig:wrapfigure}
-\end{wrapfigure}
-\blindtext
-\blindtext
+\subsection{Regular Figures}
 
-\begin{CodeListing}[title=manuelle Wrapfig]
-\begin{wrapfigure}{r}{0.25\textwidth}
-    \includegraphics[width=0.9\linewidth]{./worsch}
-    \caption{GBI Prof.}
-    \label{fig:wrapfigure}
-\end{wrapfigure}
+\fig[width=0.5\linewidth]{Prof. Dr. Thomas Worsch}{./worsch}
+
+\begin{CodeListing}
+\fig[width=0.5\linewidth]{Prof. Dr. Thomas Worsch}{./worsch}
 \end{CodeListing}
 
-\newpage
+\subsection{Wrapfigures}
 
-\wrapfig{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
+\wrapfig[11]{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
 
-\blindtext
+When including graphics which are not essential or just an added bonus on top of your content,
+always use the \code{\textbackslash{}wrapfig} command. Wrapfigures place the image inside of
+a box with the other content wrapping around said box. The \code{wrapfig} command has
+five arguments:
+\begin{enumerate}
+    \item \textit{(optional)} Number of lines the box will wrap
+    \item Width of the wrap box, e.g. \code{0.25\textbackslash{}textwidth})
+    \item Alignment of the wrapper box \code{l}, \code{r} or \code{c}
+    \item Width of the wrapper box, e.g. \code{0.25\textbackslash{}textwidth}
+    \item Source of the included image
+\end{enumerate}
 
-\begin{CodeListing}[title=Macro Wrapfigure]
-\wrapfig{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
+\begin{CodeListing}
+\wrapfig[10]{r}{0.25\textwidth}{Thomas Worsch}{./worsch}
 \end{CodeListing}
 
-\newpage
-\section{Algorithmen und so}
-\blindtext\blindtext\blindtext\blindtext\blindtext\
 
-\begin{CodeListing}[caption=Beispiel Code-Listing]
-\begincode
-\begin{CodeListing}[language=java, caption=Beispiel-Code]
-public class Example {
-    public static void main(String args[]) {
-        System.out.println("Hello, World!");
-    }
-}
-\end{CodeListing
-\endcode
+\section{Algorithms and Code Segments}
+
+When writing algorithms or other code-listings, you might want to move the whole block to the
+next page if there are page breaks inbetween your lines of code.
+
+\vspace{1em}
+\definition{Fill breaking space}{Use \code{\textbackslash{}filbreak} before your code listing}
+
+\begin{CodeListing}[caption=Code-Listing Positioning]
+Imagine you are writing some code
+
+and all of a sudden
+...
+...
+your page breaks o_o
+
+use \filbreak to avoid this problem ;D
 \end{CodeListing}
+
+In order to correctly format your code, use this syntax:
+\begin{verbatim}
+\begincode % use only if you want your code to float
+           % (this might cause overlapping in some places)
+\begin{CodeListing}[language=..., caption=...]
+
+    ...
+
+\end{CodeListing}
+\endcode % if used, this must always go together with \begincode
+\end{verbatim}
+
+If you want the listing to be indexed, use \code{caption}, otherwise use \code{title}
+
+\section*{Code-Listing lanuage highlight examples}
+
+\subsection{language=pseudocode}
 
 \begin{CodeListing}[language=pseudocode]
 Function test(a: $\mathbb{N}$) {
-    while peter is doof do
-        toete peter
-        asdfasdf    # yes
-        asdfasdf    // test
-        asdfasdf
-        asdf
+    while n > 0 do
+        something
+        code...code    # yes
+        code...code    // test
+    done
 }
 \end{CodeListing}
 
-\blindtext\n
+\subsection{language=java}
 
 \begincode
 \begin{CodeListing}[language=java, caption=Beispiel-Code]
@@ -140,7 +188,7 @@ public class Example {
 \end{CodeListing}
 \endcode
 
-\blindtext\n
+\subsection{language=80x86}
 
 \begincode
 \begin{CodeListing}[language=80x86, title=Intel 80x86 Assembler Beispiel]
@@ -150,11 +198,13 @@ sub     esp, 4    ; allocate 4 bytes of stack space
 \end{CodeListing}
 \endcode
 
+\subsection{language=clang}
+
 \begincode
 \begin{CodeListing}[language=clang, title=Example C-Code]
 #include <stdlio.h>
 
-// Das hier ist ein Hello-World Programm in C
+// This is a hello-world program in C
 int main(int argc, char** argv)
 {
     printf("Hello, World!\n");
@@ -162,6 +212,8 @@ int main(int argc, char** argv)
 }
 \end{CodeListing}
 \endcode
+
+\subsection{language=riscv}
 
 \begincode
 \begin{CodeListing}[language=riscv, title=Example RISC-V Assembler]
@@ -176,6 +228,8 @@ str0:   .asciz "Hello, World!\n"    ; define string
 \endcode
 
 \printindex
+
 \lstlistoflistings
 \listoffigures
+
 \end{document}
