@@ -12,7 +12,7 @@
 %   3: Color
 %   4: Title
 %   5: Content
-\newcommand{\abstractDefinition}[5]{
+\providecommand{\abstractDefinition}[5]{
     \noindent
     \parbox[t]{\linewidth}{
         #2{ } %$\:$
@@ -26,7 +26,7 @@
     \par % End the line
 }
 
-\newcommand{\definition}[3][1]{
+\providecommand{\definition}[3][1]{
     \abstractDefinition{#1}{\faArchive}{kit-blue}{#2}{#3}
     % Stichwortverzeichnis am Ende erzeugen.
     \index[definition]{
@@ -37,11 +37,22 @@
     }
 }
 
-\newcommand{\defwarn}[3][1]{
+\providecommand{\defindex}[4][1]{
+    \abstractDefinition{#1}{\faArchive}{kit-blue}{#3}{#4}
+    % Stichwortverzeichnis am Ende erzeugen.
+    \index[#2]{
+        \vspace{0.2cm}
+        \hspace*{-0.5cm}
+        \underline{\textsc{#3}}\\
+        #4
+    }
+}
+
+\providecommand{\defwarn}[3][1]{
     \abstractDefinition{#1}{\textcolor{kit-orange}{\faExclamationTriangle}}{kit-orange}{#2}{#3}
 }
 
-\newcommand{\defproblem}[3][1]{
+\providecommand{\defproblem}[3][1]{
     \abstractDefinition{#1}{\textcolor{kit-red}{\faExclamationCircle}}{kit-red}{#2}{#3}
 }
 

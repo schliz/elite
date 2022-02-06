@@ -42,6 +42,7 @@
 \RequirePackage{booktabs}   % prettier tables
 \RequirePackage{csquotes}   % \enquote command
 \RequirePackage{environ}    % better environments
+\RequirePackage{xparse}     % better commands
 
 % Math packages and symbols
 \RequirePackage{amsmath}

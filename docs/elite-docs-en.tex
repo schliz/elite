@@ -18,6 +18,9 @@
 \author{Christian Schliz \& Julian Keck}
 \date{\today}
 
+\makeindex[name=alternative, title=Alternative]
+\newcommand{\altindex}{alternative}
+
 \begin{document}
 
 \maketitle
@@ -83,7 +86,8 @@ might need to redefine some commands and macros.}
 
 \definition{Definition}{%
     A definition is created with the command \texttt{\textbackslash{}definition\{\textit{name}\}\{\textit{content}\}}.
-    All styles are based on \texttt{\textbackslash{}abstractDefinition}
+    All styles are based on \texttt{\textbackslash{}abstractDefinition}. All definitions have one optional argument:
+    Specify 1 or 0 for bottom spacing or nothing respectively (default is 1: bottom spacing)
 }
 
 \defwarn{Warnung}{%
@@ -97,6 +101,16 @@ might need to redefine some commands and macros.}
 \defhint{Hinweis}{%
     is created by \texttt{\textbackslash{}defhint\{\textit{Hinweis}\}\{\textit{content}\}}
 }
+
+\defindex[1]{\altindex}{Different Index}{
+    Definitions can be grouped into different indices.\hfill\break
+    Use \texttt{\textbackslash{}defindex\{\textit{indexname}\}\{\textit{name}\}\{\textit{content}\}}
+}
+
+\defproblem{Paragraphs and Emergency Stops}{You cannot end a paragraph regularly from inside a definition.
+This is happening due to the use of parboxes. In order to insert a line break, use double-backslash or
+preferably \code{\textbackslash{}break}. It is worth mentioning that two line breaks in the source code
+have the same effect as inserting a paragraph manually. You will need to avoid this!}
 
 \newpage
 
@@ -243,7 +257,8 @@ str0:   .asciz "Hello, World!\n"    ; define string
 \end{CodeListing}
 \endcode
 
-\printindices
+% \printindices
+\printindex[definition]
 
 \defwarn{Please Note}{that the index might split a definition over two columns. This can be avoided by inserting
 a \code{\textbackslash{}filbreak} at the top of the index element definition. Since this has some side effects if
@@ -251,5 +266,7 @@ the definitions are too short, we chose not to do that here.}
 
 \lstlistoflistings
 \listoffigures
+
+\printindex[\altindex]
 
 \end{document}
