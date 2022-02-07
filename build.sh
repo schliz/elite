@@ -74,7 +74,8 @@ $FILECONTENTS
 function build_docs {
     mkdir -p $BUILD_DOCS_DIR/
     cd $DOCS_SOURCE_DIR
-    pdflatex -halt-on-error -output-directory $BUILD_DOCS_DIR -jobname $CLASS_NAME $DOCS_SOURCE_DIR/$DOCS_SOURCE
+    # pdflatex -halt-on-error -output-directory $BUILD_DOCS_DIR -jobname $CLASS_NAME $DOCS_SOURCE_DIR/$DOCS_SOURCE
+    latexmk -pdf -halt-on-error --jobname=$CLASS_NAME --output-directory=$BUILD_DOCS_DIR $DOCS_SOURCE_DIR/$DOCS_SOURCE
     cd $BUILD_DOCS_DIR
     _temp=$(makeindex *.idx)
     cd $BASE_DIR
