@@ -36,6 +36,7 @@
 
 \RequirePackage[table]{xcolor}      % colors
 \RequirePackage{fontawesome5}       % fontawesome icons
+\RequirePackage{float}              % needs to be included before changebar (conflict at \float@end)
 \RequirePackage[color, leftbars]{changebar}     % colored bars next to definitions
 \RequirePackage{graphicx}   % include pictures
 \RequirePackage{wrapfig}    % format pictures
