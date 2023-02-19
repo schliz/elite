@@ -55,7 +55,7 @@
 \RequirePackage{imakeidx}
 \RequirePackage{hyperref}
 \RequirePackage{listings}       % source code listings
-\RequirePackage{sourcecodepro}  % soruce code font
+\RequirePackage{sourcecodepro}  % source code font
 
 % Dependencies changed by options
 % \RequirePackage[\elite@fontstyle]{sourceserifpro}
